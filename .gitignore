@@ -1,0 +1,12 @@
+# ignore configures of idea
+.idea/
+
+# ignore configures of gradle
+.gradle/
+gradle/
+build.gradle
+gradle.properties
+gradlew
+gradlew.bat
+local.properties
+settings.gradle
