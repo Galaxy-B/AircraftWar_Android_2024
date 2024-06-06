@@ -2,12 +2,14 @@ package com.example.aircraftwar2024.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.example.aircraftwar2024.Dao.PlayerScore;
 import com.example.aircraftwar2024.Dao.PlayerScoreDao;
 import com.example.aircraftwar2024.Dao.ScoreDaoImpl;
 import com.example.aircraftwar2024.R;
+import com.example.aircraftwar2024.activityManager.ActivityManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +37,7 @@ import java.util.Objects;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class RecordActivity extends AppCompatActivity
+public class RecordActivity extends AppCompatActivity implements View.OnClickListener
 {
     private String gameType;
     private int score;
@@ -43,11 +46,19 @@ public class RecordActivity extends AppCompatActivity
     private String file;
     private PlayerScoreDao playerScoreDao;
     private ListView list;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+
+        ActivityManager.getActivityManager().addActivity(this);
+
+        intent = new Intent(RecordActivity.this, MainActivity.class);
+
+        Button jump_back = findViewById(R.id.button);
+        jump_back.setOnClickListener(this);
 
         // 获取游戏难度
         gameType = getIntent().getStringExtra("mode");
@@ -145,5 +156,15 @@ public class RecordActivity extends AppCompatActivity
         );
         //添加并显示
         list.setAdapter(listItemAdapter);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        if(v.getId() == R.id.button)
+        {
+            ActivityManager.getActivityManager().finishAllActivity();
+            startActivity(intent);
+        }
     }
 }

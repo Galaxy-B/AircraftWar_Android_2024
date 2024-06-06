@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.aircraftwar2024.R;
+import com.example.aircraftwar2024.activityManager.ActivityManager;
 
 public class OfflineActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean is_music_on = false;
@@ -28,6 +29,8 @@ public class OfflineActivity extends AppCompatActivity implements View.OnClickLi
 
         intent = new Intent(OfflineActivity.this, GameActivity.class);
         intent.putExtra("music", is_music_on);
+
+        ActivityManager.getActivityManager().addActivity(this);
     }
 
     @Override

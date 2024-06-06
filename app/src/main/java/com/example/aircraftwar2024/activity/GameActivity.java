@@ -16,6 +16,7 @@ import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
 import com.example.aircraftwar2024.game.MediumGame;
+import com.example.aircraftwar2024.activityManager.ActivityManager;
 
 
 public class GameActivity extends AppCompatActivity {
@@ -38,6 +39,8 @@ public class GameActivity extends AppCompatActivity {
         intent = new Intent(GameActivity.this, RecordActivity.class);
         //在主线程中创建handler实例
         myHandler = new MyHandler(this);
+
+        ActivityManager.getActivityManager().addActivity(this);
 
         if(getIntent() != null){
             gameType = getIntent().getIntExtra("gameType",1);

@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.aircraftwar2024.R;
+import com.example.aircraftwar2024.activityManager.ActivityManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         music_off.setOnClickListener(this);
 
         intent = new Intent(MainActivity.this, OfflineActivity.class);
+
+        ActivityManager.getActivityManager().addActivity(this);
     }
 
     @Override
