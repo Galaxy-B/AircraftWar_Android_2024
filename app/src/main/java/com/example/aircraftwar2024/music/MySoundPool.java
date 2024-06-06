@@ -8,14 +8,15 @@ import com.example.aircraftwar2024.R;
 
 import java.util.HashMap;
 
-public class MySoundPool {
-
-    private boolean is_music_on = false;
+public class MySoundPool
+{
     private SoundPool mysp;
-    private AudioAttributes audioAttributes = null;
     private HashMap<Integer, Integer> spMap;
+    private boolean is_music_on = false;
+    private AudioAttributes audioAttributes = null;
 
-    public MySoundPool(Context context, boolean music_state){
+    public MySoundPool(Context context, boolean music_state)
+    {
         is_music_on = music_state;
 
         audioAttributes = new AudioAttributes.Builder()
@@ -35,10 +36,11 @@ public class MySoundPool {
         spMap.put(4, mysp.load(context, R.raw.game_over, 1));
     }
 
-    public void playMusic(int index){
-        if(is_music_on){
+    public void playMusic(int index)
+    {
+        if (is_music_on)
+        {
             mysp.play(spMap.get(index), 1, 1, 0, 0, 1.2f);
         }
     }
-
 }

@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
 
         intent = new Intent(GameActivity.this, RecordActivity.class);
         //在主线程中创建handler实例
-        myHandler = new MyHandler();
+        myHandler = new MyHandler(this);
 
         if(getIntent() != null){
             gameType = getIntent().getIntExtra("gameType",1);
@@ -77,18 +77,26 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public class MyHandler extends Handler {
-        public MyHandler(){
+    public class MyHandler extends Handler
+    {
+        private GameActivity activity;
+        public MyHandler(GameActivity activity)
+        {
             super(Looper.getMainLooper());
+            this.activity = activity;
         }
         // 通过复写handlerMessage() 从而确定更新UI的操作
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(Message msg)
+        {
             // 根据不同线程发送过来的消息，执行不同的UI操作
             // 根据 Message对象的what属性 标识不同的消息
-            if(msg.what == 1){
-                intent.putExtra("mode", (String)msg.obj);
-                startActivity(intent);
+            if(msg.what == 1)
+            {
+                String result = (String)msg.obj;
+                intent.putExtra("mode", result.substring(0,1));
+                intent.putExtra("score", result.substring(1));
+                activity.startActivity(intent);
             }
         }
     }

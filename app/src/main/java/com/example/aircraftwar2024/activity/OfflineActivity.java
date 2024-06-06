@@ -27,6 +27,7 @@ public class OfflineActivity extends AppCompatActivity implements View.OnClickLi
         hard_button.setOnClickListener(this);
 
         intent = new Intent(OfflineActivity.this, GameActivity.class);
+        intent.putExtra("music", is_music_on);
     }
 
     @Override

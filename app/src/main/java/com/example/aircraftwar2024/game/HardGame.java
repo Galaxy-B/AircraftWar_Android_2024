@@ -11,7 +11,7 @@ import java.util.List;
 public class HardGame extends BaseGame{
     public HardGame(Context context, boolean music_state, MyHandler myHandler) {
         super(context, music_state, myHandler);
-        msg.obj = "C";
+        gameType = "C";
 
         this.backGround = ImageManager.BACKGROUND3_IMAGE;
         this.enemyMaxNumber = 5;

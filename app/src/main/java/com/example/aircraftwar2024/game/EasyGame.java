@@ -15,7 +15,7 @@ public class EasyGame extends BaseGame{
 
     public EasyGame(Context context, boolean music_state, MyHandler myHandler) {
         super(context, music_state, myHandler);
-        msg.obj = "A";
+        gameType = "A";
 
         this.backGround = ImageManager.BACKGROUND1_IMAGE;
         this.enemyMaxNumber = 2;

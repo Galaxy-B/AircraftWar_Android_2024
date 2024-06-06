@@ -31,112 +31,116 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
-public class RecordActivity extends AppCompatActivity {
-
+public class RecordActivity extends AppCompatActivity
+{
     private String gameType;
+    private int score;
+    private List<PlayerScore> records;
 
-    private Context context;
-    private PlayerScore playerScore;
-
-    private String file = "easy_game.txt";
-
-    private PlayerScoreDao playerScoreDao = new ScoreDaoImpl(this, file);
-
-    private File scoreFile;
-
-    private int index = 0;
-    private FileOutputStream fos = null;
-    private OutputStreamWriter osw = null;
-
-    private FileInputStream fis = null;
-    private InputStreamReader isr = null;
-    private int row = -1;
-    private int cnt = 0;
-    private String[][] tableData;
-
-    public RecordActivity() throws IOException, ClassNotFoundException {
-        // 读取文件中的数据并更新列表
-        playerScoreDao.getAllItems(scoreFile);
-    }
+    private String file;
+    private PlayerScoreDao playerScoreDao;
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
+        // 获取游戏难度
         gameType = getIntent().getStringExtra("mode");
+        // 获取本次游戏的分数
+        score = Integer.parseInt(getIntent().getStringExtra("score"));
         TextView degree = findViewById(R.id.pattern);
 
-        switch(gameType){
+        switch(gameType)
+        {
             case "A":
-                file = "easy_game.txt";
+                file = "easy_game.dat";
                 degree.setText("简单模式");
                 break;
             case "B":
-                file = "normal_game.txt";
+                file = "medium_game.dat";
                 degree.setText("普通模式");
                 break;
             case "C":
-                file = "hard_game.txt";
+                file = "hard_game.dat";
                 degree.setText("困难模式");
                 break;
         }
 
         //获得Layout里面的ListView
-        ListView list = (ListView) findViewById(R.id.record);
+        list = (ListView) findViewById(R.id.record);
 
-        getData();
+        // 实例化DAO 此过程已经完成文件的读取
+        playerScoreDao = new ScoreDaoImpl(file, this);
+
+        // 将本次游戏的得分写入记录
+        playerScoreDao.add_record("test", score);
+
+        // 利用从文件中读取的数据更新列表
+        records = playerScoreDao.get_all_record();
+
+        // 更新排行榜
+        update_adapter_view();
+
+        // 将新记录写入文件
+        playerScoreDao.save_record();
+
         //添加单击监听
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int postion, long id) {
-                //Map<String, Object> record_map = (Map<String, Object>) adapterView.getItemAtPosition(postion);
-                row = postion;
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                AlertDialog builder = new AlertDialog.Builder(RecordActivity.this)
+                        //设置对话框的按钮文本及按钮监听器
+                        .setMessage("是否确定删除？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                // 删除对应位置的记录
+                                playerScoreDao.delete_record(position);
+                                // 更新排行榜
+                                update_adapter_view();
+                                // 将新纪录写入文件
+                                playerScoreDao.save_record();
+                            }
+                        })
+                        .setNegativeButton("取消",null)
+                        .show();
             }
-            AlertDialog builder = new AlertDialog.Builder(context)
-                    //设置对话框的按钮文本及按钮监听器
-                    .setMessage("是否确定删除？")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        playerScoreDao.deleteByTime(tableData,scoreFile);
-                        tableData[row + cnt][3] = "delete";
-                        cnt++;
-                        playerScoreDao.deleteByTime(tableData,scoreFile);
-                    }
-                })
-                    .setNegativeButton("取消",null)
-                    .show();
         });
-
-
-
     }
 
-    private void getData(){
-        ArrayList<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map = new HashMap<String, Object>();
+    private void update_adapter_view()
+    {
+        ArrayList<Map<String, Object>> list_item = new ArrayList<Map<String, Object>>();
 
-        // 读取文件中的数据并更新列表
-        playerScoreDao.addItem(playerScore, scoreFile);
-        playerScoreDao.getAllItems(scoreFile);
-        playerScoreDao.sortByScore();
-        tableData = playerScoreDao.outPutItems();
-        playerScoreDao.getAllItems(scoreFile);
+        // 对输出日期格式化
+        DateFormat df = new SimpleDateFormat("MM-dd HH:mm");
 
-        map.put("rank", ++index);
-        map.put("user", "test");
-        map.put("score", tableData[index-1][2]);
-        map.put("time", tableData[index-1][3]);
-        listitem.add(map);
+        int rank = 1;
+        for (PlayerScore record : records)
+        {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("rank", rank++);
+            map.put("user", record.get_player_name());
+            map.put("score", record.get_score());
+            map.put("time", df.format(record.get_record_date()));
+            list_item.add(map);
+        }
 
         //生成适配器的Item和动态数组对应的元素
         SimpleAdapter listItemAdapter = new SimpleAdapter(
                 this,
-                listitem,
+                list_item,
                 R.layout.activity_item,
-                new String[]{"排名","用户","得分","时间"},
+                new String[]{"rank","user","score","time"},
                 new int[]{R.id.rank,R.id.user,R.id.score,R.id.time}
         );
         //添加并显示
