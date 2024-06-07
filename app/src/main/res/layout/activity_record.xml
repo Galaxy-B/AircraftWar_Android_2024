@@ -11,17 +11,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/rank_header"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="排名"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pattern" />
+
+    <TextView
+        android:id="@+id/user_header"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="用户名"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintLeft_toRightOf="@id/rank_header"
+        app:layout_constraintTop_toBottomOf="@id/pattern" />
+    <TextView
+        android:id="@+id/score_header"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="分数"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toRightOf="@id/user_header"
+        app:layout_constraintTop_toBottomOf="@id/pattern" />
+    <TextView
+        android:id="@+id/time_header"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="时间"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toRightOf="@id/score_header"
+        app:layout_constraintTop_toBottomOf="@id/pattern" />
 
     <ListView
         android:id="@+id/record"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="600dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pattern" >
+        app:layout_constraintTop_toBottomOf="@id/pattern">
+
     </ListView>
 
     <Button
@@ -30,7 +78,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/record"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="650dp"
         android:text="返回首页" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

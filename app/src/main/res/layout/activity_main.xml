@@ -28,13 +28,24 @@
         app:layout_constraintTop_toTopOf="parent"
         android:onClick="click_to_jump" />
 
+    <Button
+        android:id="@+id/online"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="联机对战"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jump_to_menu"
+        android:onClick="click_to_online" />
+
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jump_to_menu">
+        app:layout_constraintTop_toBottomOf="@id/online">
         <RadioButton android:id="@+id/radio_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
