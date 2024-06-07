@@ -17,17 +17,17 @@
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/user"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         app:layout_constraintLeft_toRightOf="@+id/rank"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/score"
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:textSize="20sp"
@@ -37,12 +37,12 @@
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/time"
-        android:layout_width="180dp"
+        android:layout_width="160dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         app:layout_constraintLeft_toRightOf="@+id/score"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -2,6 +2,7 @@ package com.example.aircraftwar2024.supply;
 
 
 import com.example.aircraftwar2024.basic.aircraft.HeroAircraft;
+import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.shoot.ShootStrategy;
 
 import java.util.Stack;
@@ -54,6 +55,8 @@ public class FireSupply extends AbstractFlyingSupply {
         };
 
         new Thread(fireUpTask).start();
+
+        BaseGame.mySoundPool.playMusic(3);
         System.out.println("FireSupply active");
     }
 }

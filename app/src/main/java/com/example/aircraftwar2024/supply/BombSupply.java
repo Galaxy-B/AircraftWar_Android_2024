@@ -1,6 +1,9 @@
 package com.example.aircraftwar2024.supply;
 
 
+import com.example.aircraftwar2024.game.BaseGame;
+import com.example.aircraftwar2024.music.MySoundPool;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +24,9 @@ public class BombSupply extends AbstractFlyingSupply {
     }
 
     @Override
-    public void activate() {
+    public void activate()
+    {
+        BaseGame.mySoundPool.playMusic(2);
         System.out.println("BombSupply active");
     }
 
