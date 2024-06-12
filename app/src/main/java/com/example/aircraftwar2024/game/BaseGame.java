@@ -43,7 +43,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Callback, Runnable{
 
     public static final String TAG = "BaseGame";
-    boolean mbLoop; //控制绘画线程的标志位
+    public boolean mbLoop; //控制绘画线程的标志位
     private final SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //绘图的画布
     private final Paint mPaint;
@@ -231,6 +231,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             }
             // 后处理
             postProcessAction();
+            GameOver();
         };
         task.run();
     }
@@ -446,7 +447,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         heroBullets.removeIf(AbstractFlyingObject::notValid);
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
         flyingSupplies.removeIf(AbstractFlyingObject::notValid);
+    }
 
+    public void GameOver(){
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
             mbLoop = false;
@@ -458,7 +461,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             myHandler.sendMessage(msg);
             Log.i(TAG, "heroAircraft is not Valid");
         }
-
     }
 
     public void draw() {
@@ -511,7 +513,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         }
     }
 
-    private void paintScoreAndLife() {
+    public void paintScoreAndLife() {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
 
