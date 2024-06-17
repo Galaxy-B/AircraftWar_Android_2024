@@ -18,7 +18,7 @@
         <activity
             android:name=".activity.ResultActivity"
             android:exported="false" />
-        <activity    
+        <activity
             android:name=".activity.OnlineGameActivity"
             android:exported="false" />
         <activity
