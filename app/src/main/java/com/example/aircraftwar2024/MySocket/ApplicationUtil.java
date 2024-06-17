@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ApplicationUtil extends Application {
-    public static final String ADDRESS = "10.0.2.2";
+    public static final String ADDRESS = "192.168.137.1";
     public static final int PORT = 9999;
 
     private Socket socket;

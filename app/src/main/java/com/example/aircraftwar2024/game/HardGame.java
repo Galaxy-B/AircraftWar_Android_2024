@@ -3,14 +3,14 @@ package com.example.aircraftwar2024.game;
 import android.content.Context;
 
 import com.example.aircraftwar2024.ImageManager;
-import com.example.aircraftwar2024.activity.GameActivity.MyHandler;
 import com.example.aircraftwar2024.basic.aircraft.AbstractEnemyAircraft;
 
 import java.util.List;
+import android.os.Handler;
 
 public class HardGame extends BaseGame{
-    public HardGame(Context context, boolean music_state, MyHandler myHandler) {
-        super(context, music_state, myHandler);
+    public HardGame(Context context, boolean music_state, Handler handler) {
+        super(context, music_state, handler);
         gameType = "C";
 
         this.backGround = ImageManager.BACKGROUND3_IMAGE;

@@ -13,8 +13,8 @@ import java.util.List;
 
 public class EasyGame extends BaseGame{
 
-    public EasyGame(Context context, boolean music_state, MyHandler myHandler) {
-        super(context, music_state, myHandler);
+    public EasyGame(Context context, boolean music_state, Handler handler) {
+        super(context, music_state, handler);
         gameType = "A";
 
         this.backGround = ImageManager.BACKGROUND1_IMAGE;

@@ -18,6 +18,9 @@
         <activity
             android:name=".activity.ResultActivity"
             android:exported="false" />
+        <activity    
+            android:name=".activity.OnlineGameActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.RecordActivity"
             android:exported="false" />
