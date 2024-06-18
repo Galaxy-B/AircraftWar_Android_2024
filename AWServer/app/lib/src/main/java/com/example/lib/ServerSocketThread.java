@@ -52,7 +52,7 @@ public class ServerSocketThread extends Thread{
                     this.sendFlagMessage(client1, client2, "shutdown");
                     //关闭socket输入输出流
                     client1.shutdownInput();
-                    client2.shutdownOutput();
+                    client2.shutdownInput();
                     client1.shutdownOutput();
                     client2.shutdownOutput();
                     client1.close();
