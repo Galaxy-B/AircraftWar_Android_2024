@@ -79,6 +79,14 @@ public class OnlineGame extends MediumGame{
                     }
                 }
                 writer.println("end");
+                while(mbLoop){
+                    try{
+                        writer.println("" + getScore());
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }).start();
 
             //接收服务器返回的数据
@@ -93,7 +101,7 @@ public class OnlineGame extends MediumGame{
                             myHandler.sendMessage(message);
                             mbLoop = false;
                             break;
-                        }else {
+                        }else if(!(fromserver.equals("end"))){
                             op_score = Integer.parseInt(fromserver);
                         }
                     }
@@ -112,7 +120,9 @@ public class OnlineGame extends MediumGame{
         while(mbLoop){
             long startTime = System.currentTimeMillis();
             //执行
-            action();
+            if(!gameOverFlag){
+                action();
+            }
             //绘画
             draw();
             //保持固定的刷新
@@ -135,7 +145,6 @@ public class OnlineGame extends MediumGame{
     public void GameOver(){
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
-            mbLoop = false;
             // 播放游戏失败音效
             mySoundPool.playMusic(4);
             Log.i("OnlineGame", "heroAircraft is not Valid");

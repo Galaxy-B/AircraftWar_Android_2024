@@ -71,6 +71,7 @@ public class ServerSocketThread extends Thread{
                 // 从socket连接读取到的不是断开连接请求，也没有敌机死亡，则向客户端发送分数
                 this.sendScoreMessage(client1, client2, content1, content2);
             }
+            System.out.println("end while");
 
         } catch (IOException e)
         {
