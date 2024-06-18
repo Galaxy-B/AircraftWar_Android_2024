@@ -34,7 +34,7 @@ public class ServerSocketThread extends Thread{
         try
         {
             in1 = new BufferedReader(new InputStreamReader(client1.getInputStream(),"UTF-8"));
-            in2 = new BufferedReader(new InputStreamReader(client1.getInputStream(),"UTF-8"));
+            in2 = new BufferedReader(new InputStreamReader(client2.getInputStream(),"UTF-8"));
 
             // 两个客户端均接入后 启动游戏
             this.sendFlagMessage(client1, client2, "start");

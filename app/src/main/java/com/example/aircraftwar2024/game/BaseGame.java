@@ -45,7 +45,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public static final String TAG = "BaseGame";
     public boolean mbLoop; //控制绘画线程的标志位
     private final SurfaceHolder mSurfaceHolder;
-    private Canvas canvas;  //绘图的画布
+    protected Canvas canvas;  //绘图的画布
     private final Paint mPaint;
 
     //点击屏幕位置
@@ -91,9 +91,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     /**
      * 时间间隔(ms)，控制刷新频率
      */
-    private final int timeInterval = 16;
+    protected final int timeInterval = 16;
 
-    private final HeroAircraft heroAircraft;
+    protected final HeroAircraft heroAircraft;
 
     protected final List<AbstractEnemyAircraft> enemyAircrafts;
     private final List<AbstractFlyingSupply> flyingSupplies;

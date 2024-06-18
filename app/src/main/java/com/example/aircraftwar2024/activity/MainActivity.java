@@ -45,14 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AlertDialog alertDialog;
     private String fromserver = null;
     private Context context = this;
+    private ApplicationUtil appUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+        appUtil = (ApplicationUtil) MainActivity.this.getApplication();
         try {
             //创建socket对象
-            appUtil.init();
-            socket = appUtil.getSocket();
+//            appUtil.init();
+//            socket = appUtil.getSocket();
             in = appUtil.getIN();
             out = appUtil.getOut();
         } catch (Exception e) {
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run(){
             try{
-                ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+                //ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
                 try {
                     //创建socket对象
                     appUtil.init();

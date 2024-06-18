@@ -34,7 +34,6 @@ public class OnlineGameActivity extends AppCompatActivity {
     private Socket socket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ApplicationUtil appUtil = (ApplicationUtil) this.getApplication();
         super.onCreate(savedInstanceState);
 
         getScreenHW();
@@ -48,7 +47,7 @@ public class OnlineGameActivity extends AppCompatActivity {
         }
 
         myHandler = new MyHandler(this);
-        socket = appUtil.getSocket();
+        socket = ApplicationUtil.getSocket();
         baseGameView = new OnlineGame(this, is_music_on, myHandler, socket);
         setContentView(baseGameView);
     }

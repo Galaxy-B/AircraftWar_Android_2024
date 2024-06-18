@@ -26,8 +26,8 @@ import java.util.Objects;
 
 public class OnlineGame extends MediumGame{
     private int my_score, op_score;
-    Canvas canvas;
-    AbstractAircraft heroAircraft;
+//    Canvas canvas;
+//    AbstractAircraft heroAircraft;
     private BufferedReader in;
     private PrintWriter writer;
     private Socket socket;
@@ -50,7 +50,7 @@ public class OnlineGame extends MediumGame{
         // 绘制分数和生命值文本
         my_score = getScore();
         String my_scoreText = "SCORE: " + my_score; // 假设score为分数变量
-        String op_scoreText = "Opponent SCORE" + op_score;
+        String op_scoreText = "Opponent SCORE: " + op_score;
         String lifeText = "LIFE: " + heroAircraft.getHp(); // 假设life为生命值变量
 
         canvas.drawText(my_scoreText, 10, 50, paint); // 分数文本框位置
@@ -106,6 +106,30 @@ public class OnlineGame extends MediumGame{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        // 播放背景音乐音频
+        myMediaPlayer.startBGM();
+
+        while(mbLoop){
+            long startTime = System.currentTimeMillis();
+            //执行
+            action();
+            //绘画
+            draw();
+            //保持固定的刷新
+            long endTime = System.currentTimeMillis();
+            long deltaTime = endTime - startTime;
+
+            if(deltaTime < timeInterval){
+                try{
+                    Thread.sleep(timeInterval - deltaTime);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // 停止播放并释放MediaPlayer
+        myMediaPlayer.stopMusic();
     }
     @Override
     public void GameOver(){
