@@ -33,7 +33,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
 
         // 获取本次对战双方的分数
         my_score = getIntent().getStringExtra("my_score");
-        rival_score = getIntent().getStringExtra("rival_score");
+        rival_score = getIntent().getStringExtra("op_score");
 
         TextView my_score_text = findViewById(R.id.my_score);
         TextView rival_score_text = findViewById(R.id.rival_score);

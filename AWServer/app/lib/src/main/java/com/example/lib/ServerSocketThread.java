@@ -107,8 +107,8 @@ public class ServerSocketThread extends Thread{
         PrintWriter pout2 = null;
         try
         {
-            System.out.println("message to client1:" + score2);
-            System.out.println("message to client2:" + score1);
+            //System.out.println("message to client1:" + score2);
+            //System.out.println("message to client2:" + score1);
 
             // OutputStreamWriter：将字符流转换为字节流
             // BufferedWriter：是缓冲字符输出流

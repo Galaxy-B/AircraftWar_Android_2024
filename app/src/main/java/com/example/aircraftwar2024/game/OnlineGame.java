@@ -86,10 +86,10 @@ public class OnlineGame extends MediumGame{
                 try {
                     String fromserver = null;
                     while((fromserver = in.readLine()) != null){
-                        if (fromserver.equals("end")){
+                        if (fromserver.equals("shutdown")){
                             Message message = Message.obtain();
                             message.what = 1;
-                            message.obj = gameType + my_score + "#" + op_score;
+                            message.obj = gameType + "#" + my_score + "#" + op_score;
                             myHandler.sendMessage(message);
                             mbLoop = false;
                             break;

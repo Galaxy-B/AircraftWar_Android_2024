@@ -31,16 +31,15 @@ public class OnlineGameActivity extends AppCompatActivity {
     private Intent intent;
     private boolean is_music_on = false;
     private MyHandler myHandler;
-
-    private ApplicationUtil appUtil = (ApplicationUtil) this.getApplication();
     private Socket socket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ApplicationUtil appUtil = (ApplicationUtil) this.getApplication();
         super.onCreate(savedInstanceState);
 
         getScreenHW();
 
-        intent = new Intent();
+        intent = new Intent(OnlineGameActivity.this, RecordActivity.class);
 
         ActivityManager.getActivityManager().addActivity(this);
 
@@ -84,9 +83,10 @@ public class OnlineGameActivity extends AppCompatActivity {
             if(msg.what == 1)
             {
                 String result = (String)msg.obj;
-                intent.putExtra("mode", result.substring(0,1));
-                intent.putExtra("my_score", result.substring(1));
-                intent.putExtra("op_score",result);
+                String[] result_n = result.split("#",3);
+                intent.putExtra("mode", result_n[0]);
+                intent.putExtra("my_score", result_n[1]);
+                intent.putExtra("op_score",result_n[2]);
                 try {
                     socket.close();
                 } catch (IOException e) {

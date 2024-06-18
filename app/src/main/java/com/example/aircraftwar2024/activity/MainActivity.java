@@ -3,6 +3,7 @@ package com.example.aircraftwar2024.activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -36,15 +38,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent_offline, intent_online;
     private Socket socket;
     private PrintWriter writer;
+    private InputStreamReader in;
+    private OutputStreamWriter out;
     private Handler handler;
     private static  final String TAG = "MainActivity";
-    private ApplicationUtil appUtil = (ApplicationUtil) this.getApplication();
     private AlertDialog alertDialog;
     private String fromserver = null;
     private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+        try {
+            //创建socket对象
+            appUtil.init();
+            socket = appUtil.getSocket();
+            in = appUtil.getIN();
+            out = appUtil.getOut();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(v.getId() == R.id.online) {
             intent_online.putExtra("music", is_music_on);
             intent_online.putExtra("gameType", 2);
+            showLoadingDialog();
             GetOnline getOnline = new GetOnline(alertDialog);
-            showLoadingDialog(context);
             getOnline.start();
         }
         else if(v.getId() == R.id.radio_on){
@@ -86,10 +99,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 is_music_on = false;
         }
     }
-    public void showLoadingDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("匹配中，请等待...");
-        builder.setCancelable(false); // 设置为不可取消
+    public void showLoadingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setIcon(R.mipmap.ic_launcher)
+                .setTitle("系统提示")
+                .setMessage("匹配中，请等待...")
+                .setCancelable(false);// 设置为不可取消
         alertDialog = builder.create();
         alertDialog.show();
     }
@@ -100,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected class GetOnline extends Thread{
-        private BufferedReader in;
         private AlertDialog dialog;
+        private BufferedReader bf;
 
         public GetOnline(AlertDialog dialog){
             this.dialog = dialog;
@@ -109,19 +124,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run(){
             try{
-                //创建socket对象
-                appUtil.init();
-                socket = appUtil.getSocket();
-
+                ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+                try {
+                    //创建socket对象
+                    appUtil.init();
+                    socket = appUtil.getSocket();
+                    in = appUtil.getIN();
+                    out = appUtil.getOut();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 //获取socket输入输出流
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
+                bf = new BufferedReader(in);
                 writer = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(
-                                socket.getOutputStream(),"utf-8")),true);
+                        out),true);
                 Log.i(TAG,"connect to server");
 
                 //接收服务器返回的数据
-                fromserver = in.readLine();
+                fromserver = bf.readLine();
                 if(fromserver.equals("start")){
                     dismissLoadingDialog(dialog);
                     startActivity(intent_online);
