@@ -38,7 +38,7 @@ public class OnlineGameActivity extends AppCompatActivity {
 
         getScreenHW();
 
-        intent = new Intent(OnlineGameActivity.this, RecordActivity.class);
+        intent = new Intent(OnlineGameActivity.this, ResultActivity.class);
 
         ActivityManager.getActivityManager().addActivity(this);
 
